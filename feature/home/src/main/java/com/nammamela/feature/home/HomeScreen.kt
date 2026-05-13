@@ -1,5 +1,7 @@
 package com.nammamela.feature.home
 
+import com.nammamela.core.theme.translate
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,6 +12,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -20,6 +24,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun HomeScreen(
@@ -27,12 +34,17 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    
+    val liveDateString = remember {
+        val formatter = SimpleDateFormat("MMMM d", Locale.getDefault())
+        formatter.format(Date()).uppercase()
+    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         if (uiState.isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
         } else {
@@ -44,13 +56,13 @@ fun HomeScreen(
                 item {
                     Column(modifier = Modifier.padding(24.dp)) {
                         Text(
-                            text = "MAY 2",
+                            text = liveDateString,
                             color = MaterialTheme.colorScheme.secondary,
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Today",
+                            text = "Today".translate(),
                             style = MaterialTheme.typography.headlineLarge,
                             fontWeight = FontWeight.ExtraBold,
                             color = MaterialTheme.colorScheme.onBackground
@@ -60,7 +72,7 @@ fun HomeScreen(
 
                 item {
                     Text(
-                        "Featured Shows",
+                        "Featured Shows".translate(),
                         modifier = Modifier.padding(horizontal = 24.dp),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
@@ -79,7 +91,7 @@ fun HomeScreen(
 
                 item {
                     Text(
-                        "All Productions",
+                        "Browse Productions".translate(),
                         modifier = Modifier.padding(horizontal = 24.dp),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
@@ -96,6 +108,44 @@ fun HomeScreen(
 }
 
 @Composable
+fun MelaImage(
+    model: String,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop
+) {
+    val isError = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+
+    if (isError.value || model.isBlank()) {
+        Box(
+            modifier = modifier.background(
+                brush = androidx.compose.ui.graphics.Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFFFF9E1B), // Warm Marigold
+                        Color(0xFFE25822), // Deep Saffron
+                        Color(0xFFB3002D)  // Ruby Red
+                    )
+                )
+            ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "🎭",
+                fontSize = 28.sp
+            )
+        }
+    } else {
+        AsyncImage(
+            model = model,
+            contentDescription = contentDescription,
+            modifier = modifier,
+            contentScale = contentScale,
+            onError = { isError.value = true }
+        )
+    }
+}
+
+@Composable
 fun FeaturedShowCard(show: Show, onClick: (String) -> Unit) {
     Card(
         modifier = Modifier
@@ -104,10 +154,10 @@ fun FeaturedShowCard(show: Show, onClick: (String) -> Unit) {
             .clickable { onClick(show.id) },
         shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column {
-            AsyncImage(
+            MelaImage(
                 model = show.imageUrl,
                 contentDescription = null,
                 modifier = Modifier
@@ -117,8 +167,8 @@ fun FeaturedShowCard(show: Show, onClick: (String) -> Unit) {
                 contentScale = ContentScale.Crop
             )
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(show.troupe.uppercase(), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
-                Text(show.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                Text(show.troupe.translate().uppercase(), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                Text(show.title.translate(), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -132,7 +182,7 @@ fun BrowseShowCard(show: Show, onClick: (String) -> Unit) {
             .padding(horizontal = 24.dp, vertical = 8.dp)
             .clickable { onClick(show.id) }
     ) {
-        AsyncImage(
+        MelaImage(
             model = show.imageUrl,
             contentDescription = null,
             modifier = Modifier
@@ -142,8 +192,8 @@ fun BrowseShowCard(show: Show, onClick: (String) -> Unit) {
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.align(androidx.compose.ui.Alignment.CenterVertically)) {
-            Text(show.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            Text(show.troupe, style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+            Text(show.title.translate(), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text(show.troupe.translate(), style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
             Spacer(modifier = Modifier.height(8.dp))
             Divider(color = Color.LightGray.copy(alpha = 0.3f))
         }

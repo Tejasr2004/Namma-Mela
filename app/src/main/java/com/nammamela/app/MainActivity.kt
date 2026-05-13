@@ -14,10 +14,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.nammamela.core.theme.NammaMelaTheme
+import com.nammamela.core.theme.AppState
+import com.nammamela.core.theme.translate
+import com.nammamela.core.theme.AppLanguage
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.dp
 import com.nammamela.feature.booking.BookingConfirmationScreen
 import com.nammamela.feature.fanwall.FanWallScreen
 import com.nammamela.feature.home.HomeScreen
+import com.nammamela.feature.home.VenuesScreen
 import com.nammamela.feature.profile.ProfileScreen
+import com.nammamela.feature.profile.AuthScreen
 import com.nammamela.feature.seatmap.SeatMapScreen
 import com.nammamela.feature.showdetail.ShowDetailScreen
 import com.nammamela.feature.splash.SplashScreen
@@ -42,17 +50,41 @@ class MainActivity : ComponentActivity() {
 fun NammaMelaAppScreen(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-
-    val bottomBarRoutes = listOf("home", "studio", "profile")
+ 
+    val bottomBarRoutes = listOf("home", "venues", "studio", "profile")
     val showBottomBar = currentRoute in bottomBarRoutes
-
+ 
     Scaffold(
+        floatingActionButton = {
+            if (showBottomBar) {
+                FloatingActionButton(
+                    onClick = {
+                        AppState.currentLanguage = if (AppState.currentLanguage == AppLanguage.ENGLISH) {
+                            AppLanguage.KANNADA
+                        } else {
+                            AppLanguage.ENGLISH
+                        }
+                    },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    shape = androidx.compose.foundation.shape.CircleShape,
+                    modifier = Modifier.padding(bottom = 16.dp, end = 8.dp)
+                ) {
+                    Text(
+                        text = if (AppState.currentLanguage == AppLanguage.ENGLISH) "ಕನ್ನಡ" else "EN",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                    )
+                }
+            }
+        },
         bottomBar = {
             if (showBottomBar) {
                 NavigationBar {
                     NavigationBarItem(
                         icon = { Text("🏠") },
-                        label = { Text("Home") },
+                        label = { Text("Home".translate()) },
                         selected = currentRoute == "home",
                         onClick = {
                             navController.navigate("home") {
@@ -62,8 +94,19 @@ fun NammaMelaAppScreen(navController: NavHostController) {
                         }
                     )
                     NavigationBarItem(
+                        icon = { Text("📍") },
+                        label = { Text("Maps".translate()) },
+                        selected = currentRoute == "venues",
+                        onClick = {
+                            navController.navigate("venues") {
+                                popUpTo(navController.graph.startDestinationId)
+                                launchSingleTop = true
+                            }
+                        }
+                    )
+                    NavigationBarItem(
                         icon = { Text("🎭") },
-                        label = { Text("Studio") },
+                        label = { Text("Studio".translate()) },
                         selected = currentRoute == "studio",
                         onClick = {
                             navController.navigate("studio") {
@@ -74,7 +117,7 @@ fun NammaMelaAppScreen(navController: NavHostController) {
                     )
                     NavigationBarItem(
                         icon = { Text("👤") },
-                        label = { Text("Profile") },
+                        label = { Text("Profile".translate()) },
                         selected = currentRoute == "profile",
                         onClick = {
                             navController.navigate("profile") {
@@ -114,13 +157,20 @@ fun NammaMelaAppScreen(navController: NavHostController) {
             }
             composable("seatMap/{showId}") { backStackEntry ->
                 val showId = backStackEntry.arguments?.getString("showId") ?: ""
-                SeatMapScreen(
-                    showId = showId,
-                    onConfirmBooking = { seats ->
-                        // In real app, pass serialized data or use shared ViewModel
-                        navController.navigate("bookingConfirmation/B${System.currentTimeMillis().toString().takeLast(4)}")
-                    }
-                )
+                if (!AppState.isLoggedIn) {
+                    AuthScreen(onAuthSuccess = {
+                        navController.navigate("seatMap/$showId") {
+                            popUpTo("seatMap/$showId") { inclusive = true }
+                        }
+                    })
+                } else {
+                    SeatMapScreen(
+                        showId = showId,
+                        onConfirmBooking = { seats ->
+                            navController.navigate("bookingConfirmation/B${System.currentTimeMillis().toString().takeLast(4)}")
+                        }
+                    )
+                }
             }
             composable("bookingConfirmation/{bookingId}") { backStackEntry ->
                 val bookingId = backStackEntry.arguments?.getString("bookingId") ?: ""
@@ -134,7 +184,18 @@ fun NammaMelaAppScreen(navController: NavHostController) {
                 )
             }
             composable("studio") {
-                StudioScreen()
+                if (!AppState.isLoggedIn) {
+                    AuthScreen(onAuthSuccess = {
+                        navController.navigate("studio") {
+                            popUpTo("studio") { inclusive = true }
+                        }
+                    })
+                } else {
+                    StudioScreen()
+                }
+            }
+            composable("venues") {
+                VenuesScreen()
             }
             composable("fanWall/{showId}") { backStackEntry ->
                 val showId = backStackEntry.arguments?.getString("showId") ?: ""

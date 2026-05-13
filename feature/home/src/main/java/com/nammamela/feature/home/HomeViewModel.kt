@@ -35,9 +35,36 @@ class HomeViewModel @Inject constructor() : ViewModel() {
                 delay(800)
                 
                 val shows = listOf(
-                    Show("1", "Kurukshetra", "Sri Manjunatha Troupe", "file:///android_asset/images/kurukshetra.png"),
-                    Show("2", "Rakta Ratri", "Veerabhadreshwara Krupa", "file:///android_asset/images/rakta_ratri.png"),
-                    Show("3", "Dakshayagna", "Gubbi Veeranna Nataka Company", "file:///android_asset/images/kurukshetra.png")
+                    Show(
+                        id = "1", 
+                        title = "Kurukshetra", 
+                        troupe = "Sri Manjunatha Troupe", 
+                        imageUrl = "file:///android_asset/images/kurukshetra_poster.png"
+                    ),
+                    Show(
+                        id = "2", 
+                        title = "Rakta Ratri", 
+                        troupe = "Veerabhadreshwara Krupa", 
+                        imageUrl = "file:///android_asset/images/rakta_ratri_poster.png"
+                    ),
+                    Show(
+                        id = "3", 
+                        title = "Dakshayagna", 
+                        troupe = "Gubbi Veeranna Nataka Company", 
+                        imageUrl = "file:///android_asset/images/dakshayagna_poster.png"
+                    ),
+                    Show(
+                        id = "4", 
+                        title = "Shanishwara Mahatme", 
+                        troupe = "Sri Durga Devi Prasanna Sabha", 
+                        imageUrl = "file:///android_asset/images/shanishwara_poster.png"
+                    ),
+                    Show(
+                        id = "5", 
+                        title = "Prahlada Charitre", 
+                        troupe = "Saligrama Yakshagana Mandali", 
+                        imageUrl = "file:///android_asset/images/prahlada_poster.png"
+                    )
                 )
 
                 _uiState.value = _uiState.value.copy(

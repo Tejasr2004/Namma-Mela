@@ -1,0 +1,50 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Cultural Frame (Subtle glowing circle) -->
+    <path
+        android:pathData="M54,54 m-36,0 a36,36 0,1 1,72 0 a36,36 0,1 1,-72 0"
+        android:strokeWidth="2.5"
+        android:strokeColor="#FFD700"
+        android:strokeLineCap="round" />
+
+    <!-- Stylized Traditional Folk Mela Tent -->
+    <!-- Top Peak Golden Dome -->
+    <path
+        android:pathData="M54,28 L72,46 L36,46 Z"
+        android:fillColor="#FFD700" />
+    
+    <!-- Top Crown Banner Star -->
+    <path
+        android:pathData="M54,20 L55.5,24 L59.5,24 L56.5,26.5 L58,30.5 L54,28 L50,30.5 L51.5,26.5 L48.5,24 L52.5,24 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Main Tent Base with Stripes -->
+    <path
+        android:pathData="M36,46 L72,46 L72,74 L36,74 Z"
+        android:fillColor="#E53935" />
+
+    <!-- Golden vertical stripes -->
+    <path
+        android:pathData="M43,46 L47,46 L47,74 L43,74 Z"
+        android:fillColor="#FFD700" />
+    <path
+        android:pathData="M61,46 L65,46 L65,74 L61,74 Z"
+        android:fillColor="#FFD700" />
+
+    <!-- Arched royal entrance curtain -->
+    <path
+        android:pathData="M49,74 C49,60 59,60 59,74 Z"
+        android:fillColor="#212121" />
+
+    <!-- Traditional floral motifs on sides -->
+    <path
+        android:pathData="M24,54 L27,51 L24,48 L21,51 Z"
+        android:fillColor="#FFD700" />
+    <path
+        android:pathData="M84,54 L87,51 L84,48 L81,51 Z"
+        android:fillColor="#FFD700" />
+</vector>
