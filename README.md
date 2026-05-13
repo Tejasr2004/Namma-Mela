@@ -60,11 +60,11 @@ While the current foundation provides a robust, interactive frontend and localiz
 ## 6. Snapshots
 
 <img width="200" height="400" alt="6b116e4f-91b8-49fe-856d-d7d7e690e3fe" src="https://github.com/user-attachments/assets/2dc100c1-321e-45f8-a17a-9991094cbf33" />
-**Log In Page**
+LogIn Page
 <img width="200" height="400" alt="372bcf55-7474-4336-9a9e-b0a5767cb552" src="https://github.com/user-attachments/assets/08bffc60-21cc-4815-a344-9a10e7ff5c88" />
-**Dashboard**
+Dashboard
 <img width="200" height="400" alt="669f72f3-8154-4a3e-b9d7-e1639428cc5b" src="https://github.com/user-attachments/assets/968cc99f-562f-44c2-abef-80a138009f06" />
-**Map Meta Data**
+Map Meta Data
 
 
 
