@@ -47,7 +47,8 @@ The application breaks away from conventional, cluttered ticketing apps. It empl
 4.  **Studio Dashboard:** A management interface for troupe administrators to track live occupancy via interactive donut charts, manage cast profiles, and upload promotional materials.
 5.  **User Profile:** Tracks user booking history, digital tickets, and personal information.
 
----
+---<img width="2383" height="396" alt="image" src="https://github.com/user-attachments/assets/2851079a-d933-4921-be09-4e967dfd2d68" />
+
 
 ## 5. Future Scope & Scalability
 
