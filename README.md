@@ -47,7 +47,7 @@ The application breaks away from conventional, cluttered ticketing apps. It empl
 4.  **Studio Dashboard:** A management interface for troupe administrators to track live occupancy via interactive donut charts, manage cast profiles, and upload promotional materials.
 5.  **User Profile:** Tracks user booking history, digital tickets, and personal information.
 
----<img width="2383" height="396" alt="image" src="https://github.com/user-attachments/assets/2851079a-d933-4921-be09-4e967dfd2d68" />
+
 
 
 ## 5. Future Scope & Scalability
@@ -56,6 +56,17 @@ While the current foundation provides a robust, interactive frontend and localiz
 *   **Payment Gateway Integration:** Integration of SDKs (like Razorpay or Stripe) into the `:feature:booking` module for actual financial transactions.
 *   **Real-time Firebase Sync:** Activating the Firebase Realtime Database listeners to synchronize seat availability globally to prevent double-booking.
 *   **Push Notifications:** Utilizing Firebase Cloud Messaging (FCM) to alert users of upcoming shows or last-minute ticket availability.
+
+## 6. Snapshots
+
+1.<img width="1080" height="2400" alt="6b116e4f-91b8-49fe-856d-d7d7e690e3fe" src="https://github.com/user-attachments/assets/2dc100c1-321e-45f8-a17a-9991094cbf33" />**Log In Page**
+2.<img width="1080" height="2400" alt="372bcf55-7474-4336-9a9e-b0a5767cb552" src="https://github.com/user-attachments/assets/08bffc60-21cc-4815-a344-9a10e7ff5c88" />**Dashboard**
+3.<img width="1080" height="2400" alt="669f72f3-8154-4a3e-b9d7-e1639428cc5b" src="https://github.com/user-attachments/assets/968cc99f-562f-44c2-abef-80a138009f06" />**Map Meta Data**
+
+
+
+
+
 
 ---
 
